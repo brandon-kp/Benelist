@@ -20,11 +20,11 @@ Implemented Features
   and parsed programatically so as to reserve resources in MySQL.
 * Password protected modification of lists. This doesn't require the
   user to set up an account, only that they use a password.
+* Cloning of lists. Want to contribute something to a list? Clone it.
+  The revisions will be linked directly under the original.
 
 Planned Features
 -----------------
-* Cloning of lists. Want to contribute something to a list? Clone it.
-  The revisions will be linked directly under the original.
 * Like one revision better than another? Vote it up. Those with the
   most votes will be shown higher.
 * Merging. If you like a revision of your list enough, merge them 
