@@ -29,10 +29,11 @@
     </div>
     
 <div id="content">
+<div id="clonelink">&nbsp;<a href="<?=base_url();?>index.php/main/clonelist/<?=$slug;?>">[ Clone list ]</a></div>
 <?php 
 if($show_edit == TRUE)
 {
-    echo '<div id="editlink"><a href="'.base_url().'index.php/main/edit/'.$slug.'/">[ Edit list ]</a></div>';
+    echo '<div id="editlink"><a href="'.base_url().'index.php/main/edit/'.$slug.'/">[ Edit list ]</a> | </div>';
 }
     
 foreach ($result as $row):
@@ -60,7 +61,11 @@ endforeach;
 <div id="sidebar">
 	<h1>Related</h1>
     <ul>
-    <?php foreach($assoc as $assocs):?>
+    <?php
+		if(count($assoc) < 1):
+			echo 'There are no related lists...';
+		endif;
+		foreach($assoc as $assocs):?>
         <li>
 			<a class="assoc" title="<?=$assocs->description;?>" href="<?=base_url()?>index.php/main/view/<?=$assocs->slug;?>">
 				<?=$assocs->title;?>

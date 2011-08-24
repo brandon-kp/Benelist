@@ -207,7 +207,7 @@ class Main extends CI_Controller {
         $data['items']       = explode('##',$data['result'][0]->items); //convert the string of items into array
         $count               = count($data['items'])-1;
         
-        unset($data['items'][$count]);
+        unset($data['items'][$count]); //the last item is always  empty. This gets rid of it.
         $data['items']       = str_replace('[POUND]','#',$data['items']);
 
         if($this->input->post('submit') === 'Clone List')
