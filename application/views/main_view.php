@@ -19,12 +19,12 @@
 <div id="wrap">
 
     <div id="logo">
-        <h1><a href="./" title="Go Home"> </a></h1>
+        <h1><a href="<?=site_url();?>" title="Go Home"> </a></h1>
     </div>
     <div id="links">
-        <a href="./index.php/main/recent">Recent</a>
+        <a href="<?=base_url();?>index.php/main/recent">Recent</a>
         <span>|</span>
-        <a href="./index.php/main/create">Create</a>
+        <a href="<?=base_url();?>index.php/main/create">Create</a>
     </div>
     
 <div id="content">

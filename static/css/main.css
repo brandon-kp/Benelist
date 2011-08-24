@@ -44,11 +44,13 @@ height:87px;
 }
 
 #wrap #content{
-position:Relative;
-top:75px;   
+position:relative;
+top:75px;
+float:left;
+width:70%;
 }
 
-#wrap #content h1{
+#wrap #content h1, #sidebar h1{
 font-size:27px;
 font-family:'segoe ui',sans-serif;
 color:#ff3333;
@@ -130,4 +132,38 @@ float:right;
 #editlink{
 float:right;
 font-size:11px;
+}
+
+#sidebar{
+float:right;
+width:28%;
+position:relative;
+top:75px;
+}
+
+#sidebar li{
+list-style-type:none;
+margin:2px;
+}
+
+#sidebar a{
+text-decoration:none;
+background:#f0f0f0;
+display:block;
+padding:2px;
+border-left:3px solid #ff3333;
+text-indent:4px;
+}
+
+#sidebar a:hover{
+border-left:3px solid #ff9999;
+}
+
+.tooltip {
+background:transparent url('../img/tooltip.png') bottom;
+font-size:12px;
+height:40px;
+width:160px;
+padding:25px;
+color:#fff;	
 }

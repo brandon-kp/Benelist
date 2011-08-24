@@ -34,11 +34,38 @@ class Benelist_model extends CI_Model {
     {
         $sql = "INSERT INTO `lists` (`slug`, `title`, `description`, `items`, `listpass`) VALUES(?, ?, ?, ?, ?);";
         
+        $slug        = $this->db->escape($slug);
+        $title       = $this->db->escape($title);
+        $description = $this->db->escape($description);
+        $items       = $this->db->escape($items);
+        $list_pass   = $this->db->escape($list_pass);
+        
         $this->db->query($sql, array($slug, $title, $description, $items, $list_pass)); 
+    }
+    
+    public function clonelist_model($slug, $title, $description, $items, $list_pass, $assoc)
+    {
+        $sql = "INSERT INTO `lists` (`slug`, `title`, `description`, `items`, `listpass`, `assoc`) VALUES(?, ?, ?, ?, ?, ?);";
+        
+        /*
+        $slug        = $this->db->escape($slug);
+        $title       = $this->db->escape($title);
+        $description = $this->db->escape($description);
+        $items       = $this->db->escape($items);
+        $list_pass   = $this->db->escape($list_pass);
+        $assoc       = $this->db->escape($assoc);
+        */
+        $this->db->query($sql, array($slug, $title, $description, $items, $list_pass, $assoc)); 
     }
     
     public function edit_model($title, $description, $items, $slug, $list_pass)
     {
+        $slug        = $this->db->escape($slug);
+        $title       = $this->db->escape($title);
+        $description = $this->db->escape($description);
+        $items       = $this->db->escape($items);
+        $list_pass   = $this->db->escape($list_pass);
+        
         $sql = "UPDATE `lists` 
                 SET 
                     `items` = '$items',
@@ -51,21 +78,15 @@ class Benelist_model extends CI_Model {
         
         $this->db->query($sql);
     }
+    
+    public function get_assoc_model($slug)
+    {	
+        $slug  = $this->db->escape($slug);
+        //$query = $this->db->get_where('lists', array('assoc' => $slug));
+        
+		$query = $this->db->query("SELECT `slug`,`title`,`description` FROM `lists` WHERE `assoc` = ".$slug."");
+		
+		return $query->result();
+    }
 
 }
-
-/*
-
-INSERT INTO `benelist`.`lists` (
-`id` ,
-`slug` ,
-`title` ,
-`description` ,
-`items`
-)
-VALUES (
-NULL , 'z91H6', 'I like turtles', 'This a list of turtles.', 'Leonardo, Michelangelo, Donatello, Raphael'
-);
-
-
-*/

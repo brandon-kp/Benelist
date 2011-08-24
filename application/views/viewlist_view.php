@@ -11,6 +11,7 @@
     
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/jquery-ui.min.js"></script>
+	<script src="<?=base_url();?>static/js/jquery.tools.min.js"></script>
 
 	<title>BeneList: Lists for your benefit.</title>
 </head>
@@ -38,11 +39,10 @@ foreach ($result as $row):
 ?>
 
 <h1><?=$row->title;?></h1>
+<hr />
 <p><?=$row->description;?></p>
 
-<ol><!-- 
-    <? echo $items; ?>
--->
+<ol>
     <?php foreach($items as $each_item): ?>
     <li><?=$each_item;?></li>
     <?php endforeach; ?>
@@ -57,10 +57,22 @@ endforeach;
 <script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script><fb:comments href="<?=$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];?>" num_posts="3" width="500"></fb:comments>
 </div>
 
+<div id="sidebar">
+	<h1>Related</h1>
+    <ul>
+    <?php foreach($assoc as $assocs):?>
+        <li>
+			<a class="assoc" title="<?=$assocs->description;?>" href="<?=base_url()?>index.php/main/view/<?=$assocs->slug;?>">
+				<?=$assocs->title;?>
+			</a>
+		</li>
+    <?php endforeach; ?>
+    </ul>
+</div>
 </div>
 <script type="text/javascript">
+$("#sidebar ul li a[title]").tooltip({position: "top center"});
 $(function(){
-
 	$( "#sortable" ).sortable();
 	$( "#sortable" ).disableSelection();
     
