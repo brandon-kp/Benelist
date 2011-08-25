@@ -21,6 +21,7 @@ class Main extends CI_Controller {
         if($this->input->post('submit') === 'Create List')
         {
             $slug        = substr(uniqid(),-5);
+			$time        = date('U');
             $title       = $this->input->post('listname');
             $description = $this->input->post('listdesc');
             $items_array = $this->input->post('listitem');
@@ -51,7 +52,7 @@ class Main extends CI_Controller {
             
             $this->load->model('Benelist_model');
             
-            $this->Benelist_model->create_model($slug, $title, $description, $items, $list_pass);
+            $this->Benelist_model->create_model($slug, $title, $description, $items, $list_pass, $time);
             
             redirect('main/view/'.$slug);
         }
@@ -114,22 +115,37 @@ class Main extends CI_Controller {
     {
          $this->load->model('Benelist_model');
          
-         $this->Benelist_model->recent_model();
+         //$this->Benelist_model->recent_model();
+		 if($this->uri->segment(3) == '')
+		 {
+			$offset = '0';
+		 }
+		 elseif(is_numeric($this->uri->segment(3)))
+		 {
+			$offset = $this->uri->segment(3);
+		 }
+		 else
+		 {
+			show_error('Error #37182128');
+		 }
          
-         $data['result'] = $this->Benelist_model->recent_model();
+         $data['result'] = $this->Benelist_model->recent_model($offset);
+
+		 //$data['pagination'] = $this->pagination->create_links();
+		 $data['pagination']='';
          
          $this->load->view('viewall_view.php', $data); 
     }
     
     public function _filter_list($listitem)
     {
-        str_replace('#','&#0023;',$listitem);
+         str_replace('#','&#0023;',$listitem);
     }
     
     public function edit(){
-        $slug = $this->uri->segment(3);
-        $this->load->helper('form');
-        $this->load->library('form_validation');
+         $slug = $this->uri->segment(3);
+         $this->load->helper('form');
+         $this->load->library('form_validation');
         
          if(strlen($slug) > 5)
          {
@@ -137,24 +153,24 @@ class Main extends CI_Controller {
             exit;
          }
         
-        $this->load->model('Benelist_model');
+         $this->load->model('Benelist_model');
         
-        $this->Benelist_model->view_model($slug);
-        $data['result'] = $this->Benelist_model->view_model($slug);
+         $this->Benelist_model->view_model($slug);
+         $data['result'] = $this->Benelist_model->view_model($slug);
         
-        $data['id']          = $data['result'][0]->id;
-        $data['slug']        = $data['result'][0]->slug;
-        $data['title']       = $data['result'][0]->title;
-        $data['description'] = $data['result'][0]->description;
-        $data['listpass']    = $data['result'][0]->listpass;
-        $data['items']       = explode('##',$data['result'][0]->items); //convert the string of items into array
-        $count               = count($data['items'])-1;
+         $data['id']          = $data['result'][0]->id;
+         $data['slug']        = $data['result'][0]->slug;
+         $data['title']       = $data['result'][0]->title;
+         $data['description'] = $data['result'][0]->description;
+         $data['listpass']    = $data['result'][0]->listpass;
+         $data['items']       = explode('##',$data['result'][0]->items); //convert the string of items into array
+         $count               = count($data['items'])-1;
         
-        unset($data['items'][$count]);
-        $data['items']       = str_replace('[POUND]','#',$data['items']);
+         unset($data['items'][$count]);
+         $data['items']       = str_replace('[POUND]','#',$data['items']);
         
-        if(sha1($this->input->post('listpass').$this->config->item('encryption_key')) === $data['listpass'])
-        {
+         if(sha1($this->input->post('listpass').$this->config->item('encryption_key')) === $data['listpass'])
+         {
             $title       = $this->input->post('listname');
             $description = $this->input->post('listdesc');
             $items_array = $this->input->post('listitem');
@@ -177,9 +193,10 @@ class Main extends CI_Controller {
             
             
             $this->Benelist_model->edit_model($title, $description, $items, $slug, $list_pass);
-        }
+			redirect('main/view/'.$slug);
+         }
         
-        $this->load->view('editlist_view', $data);
+         $this->load->view('editlist_view', $data);
     }
     
     public function clonelist()
