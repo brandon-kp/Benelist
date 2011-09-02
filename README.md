@@ -3,7 +3,7 @@ Benelist: PHP/MySQL List Management app, built using Codeigniter
 
 * Author:  Brandon Probst (<brandonkprobst@gmail.com>);
 * Date:    August, 2011
-* Version: 0.0.3
+* Version: 0.0.7
 * Github:  https://github.com/brandon-kp/Benelist
 
 Feel free to use or modify, just don't lie about using it.
